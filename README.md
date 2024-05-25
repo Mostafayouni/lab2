@@ -3,12 +3,13 @@ Lab2: Disk Space Monitoring and Email Alerting
 This repository contains a bash script for monitoring disk space usage on a Linux system and sending email alerts when usage exceeds a certain threshold.
 Installation
 
-    Install Required Packages: Update the package list and install postfix and mailutils, which are necessary for setting up the email functionality.
+        sudo apt update
+        sudo apt install postfix
 
     bash
 
-sudo apt update
-sudo apt install postfix
+          sudo apt update
+          sudo apt install postfix
 
 
 Edit Postfix Configuration: Modify the /etc/postfix/main.cf file to configure Postfix to relay emails through Gmail's SMTP server.
