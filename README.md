@@ -3,90 +3,146 @@ Lab2: Disk Space Monitoring and Email Alerting
 This repository contains a bash script for monitoring disk space usage on a Linux system and sending email alerts when usage exceeds a certain threshold.
 Installation
 
-        sudo apt update
-        sudo apt install postfix
+
+
+#At first we must install reqired packages 
+
+
+            sudo apt update
+
+            sudo apt install postfix ,  sudo apt install mailutils
+
+
+        bash
+
+        
+
+#Atfirst we need to check disk space 
+
+
+       $df -H
+
+
+   bash
+
+   
+#but we don’t want unwanted file systems so we will use grep and use awk command to cut the first column and fifth coulmn
+
+
+         df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }'
 
     bash
-
-         
-
-Edit Postfix Configuration: Modify the /etc/postfix/main.cf file to configure Postfix to relay emails through Gmail's SMTP server.
-
-plaintext
-
-relayhost = [smtp.example.com]:587
-smtp_use_tls = yes
-smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-smtp_sasl_security_options = noanonymous
-
-Add Gmail Credentials: Add your Gmail credentials to the /etc/postfix/sasl_passwd file for authentication with Gmail's SMTP server.
-
-
-![Screenshot 2024-05-25 333](https://github.com/Mostafayouni/lab2/assets/105316729/d2c3c818-a368-4aae-90a0-c521df4aabda)
-
-
-
-
-[smtp.example.com]:587 username:Apppassword
-
-Secure Authentication File: Secure the /etc/postfix/sasl_passwd file and its corresponding database file using appropriate permissions.
-
-bash
-
-sudo chmod 600 /etc/postfix/sasl_passwd
-sudo chmod 600 /etc/postfix/sasl_passwd.db
-
-Verify Postfix: Check the status of the Postfix service and reload it to apply the configuration changes.
-
-bash
-
-    systemctl status postfix.service
-    systemctl reload postfix.service
-
-Usage
-
-    Check Disk Space: Use the df command to check disk space usage.
-
-    bash
-
-df -H
-
-Create Bash Script: Create a bash script named lab2.sh to automate the disk space monitoring and email alerting process.
-
-bash
-
-sudo vim lab2.sh
-
-
-![2](https://github.com/Mostafayouni/lab2/assets/105316729/bdede07e-6dce-463f-ad12-a48a2cfed424)
-
-
-
-Run Script: Set execute permissions for the bash script and run it to automate the process.
-
-bash
-
-#run a test 
-
-echo "This is a test" | mail -s "Test" your_email@gmail.com
-
-sudo chmod +x lab2.sh
-
-
-sudo ./lab2.sh
-
-Test Email Server: Test the email functionality by sending a test email using the mail command.
-
-
-
     
 
-Output
+#then we will create our bash file 
+
+     sudo vim lab2.sh
+
+ bash
+
+ 
+![2](https://github.com/Mostafayouni/lab2/assets/105316729/011c4983-1bea-4bd4-98e2-21f3f650b36d)
 
 
-![1](https://github.com/Mostafayouni/lab2/assets/105316729/3b8efe78-e737-4ec5-a86f-14ce01198888)
 
+df -H --output=pcent / displays the disk usage of the root partition (/) in percentage format.
+
+
+
+tail -n 1 selects the last line of the output, which contains the disk usage percentage.
+
+
+
+
+tr -d ' %' removes any spaces and percentage signs from the output
+
+
+
+#then  we must install reqired packages
+
+
+
+        sudo apt update
+        
+        sudo apt install postfix ,  sudo apt install mailutils
+
+    bash
+
+    
+#then we must edit or add some lines in the /etc/postfix/main.cf
+
+
+
+relayhost = [smtp.example.com]:587
+
+            smtp_use_tls = yes
+            smtp_sasl_auth_enable = yes
+            smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+            smtp_sasl_security_options = noanonymous
+
+        bash
+
+
+
+#then we must use our Gmail credintial and add it to this file /etc/postfix/sasl_passwd
+
+
+
+  [smtp.example.com]:587 username:Apppassword
+
+
+
+![Screenshot 2024-05-25 333](https://github.com/Mostafayouni/lab2/assets/105316729/6d416806-7908-40ad-bb6b-12d2634a319f)
+
+
+
+
+
+#then we must dmake some securit command 
+
+
+
+              $postmap /etc/postfix/sasl_passwd
+         $ sudo postmap /etc/postfix/sasl_passwd 
+         $ sudo ls  /etc/postfix/
+         $  sudo chmod 600 /etc/postfix/sasl_passwd
+         $  sudo chmod 600 /etc/postfix/sasl_passwd.db
+         $  ll /etc/postfix/sasl_passwd
+         $  ll /etc/postfix/sasl_passwd.db
+
+
+     bash
+
+
+
+
+
+#then we must certain that postfix runing
+
+
+
+
+                systemctl status postfix.service  
+                systemctl reload postfix.service
+ 
+          bash
+
+          
+ #then we will test our mail server
+
+ 
+                 
+                 sudo echo "This is a test" | mail -s "Test" mostafayounis600@gmail.com
+
+        bash
+
+
+        
+#then we run our script
+@$sudo chmod +x lab2.sh
+$sudo ./lab2.sh
+#####output####
+![1](https://github.com/Mostafayouni/lab2/assets/105316729/a37cfebc-e8d5-4aa3-9316-2899cbc43921)     
 
 
 
