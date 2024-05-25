@@ -5,15 +5,7 @@ Installation
 
 
 
-#At first we must install reqired packages 
 
-
-            sudo apt update
-
-            sudo apt install postfix ,  sudo apt install mailutils
-
-
-        bash
 
         
 
