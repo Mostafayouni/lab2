@@ -8,9 +8,7 @@ Installation
 
     bash
 
-          sudo apt update
-          sudo apt install postfix
-
+         
 
 Edit Postfix Configuration: Modify the /etc/postfix/main.cf file to configure Postfix to relay emails through Gmail's SMTP server.
 
