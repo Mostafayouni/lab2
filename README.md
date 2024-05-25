@@ -1,7 +1,15 @@
 # lab2
+
+
+
 #At first we must install reqired packages 
+
+
 sudo apt update
+
+
 sudo apt install postfix ,  sudo apt install mailutils
+
 #Atfirst we need to check disk space 
 $df -H
 #but we don’t want unwanted file systems so we will use grep and use awk command to cut the first column and fifth coulmn
