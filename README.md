@@ -68,14 +68,20 @@ Run Script: Set execute permissions for the bash script and run it to automate t
 
 bash
 
+#run a test 
+
+echo "This is a test" | mail -s "Test" your_email@gmail.com
+
 sudo chmod +x lab2.sh
+
+
 sudo ./lab2.sh
 
 Test Email Server: Test the email functionality by sending a test email using the mail command.
 
-bash
 
-    echo "This is a test" | mail -s "Test" your_email@gmail.com
+
+    
 
 Output
 
